@@ -458,8 +458,9 @@
         class="button button--secondary header__cta-logout"
       >{{ 'customer.log_out' | t }}</a>
     {%- else -%}
+      {%- assign return_url = app_url | url_encode -%}
       <a
-        href="/customer_authentication/login?return_to={{ post_login_path | url_encode }}"
+        href="/account/login?return_url={{ return_url }}"
         class="button button--primary header__cta"
         rel="nofollow"
       >Login</a>
