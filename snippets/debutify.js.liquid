@@ -1,3 +1,6 @@
+// Initialize Debutify object if it doesn't exist
+globalThis.Debutify = globalThis.Debutify || {};
+
 Debutify.permanent_domain = "{{ shop.permanent_domain }}";
 Debutify.designMode = "{{ request.design_mode }}" === "true";
 Debutify.host = "{{ request.host }}";
