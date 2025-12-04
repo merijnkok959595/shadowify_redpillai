@@ -148,25 +148,31 @@
 
 {%- comment -%} AUTH BUTTONS FOR MOBILE DRAWER {%- endcomment -%}
 {%- if shop.customer_accounts_enabled -%}
-  {%- assign post_login_base = '/apps/screen-time-journey' -%}
-  {%- assign from_value = request.path | url_param_escape -%}
-  {%- assign post_login_path = post_login_base | append: '?source=drawer&from=' | append: from_value -%}
-
+  {%- comment -%} Red Pill AI Dashboard with SSO {%- endcomment -%}
+  {%- assign app_url = 'https://app.redpillgpt.com/' -%}
+  {%- assign timestamp = 'now' | date: '%s' -%}
+  
   <div class="drawer-auth">
     {%- if customer -%}
+      {%- assign customer_id = customer.id -%}
+      {%- assign shop_domain = shop.permanent_domain -%}
+      {%- assign customer_email = customer.email | url_encode -%}
+      {%- assign customer_name = customer.name | url_encode -%}
+      {%- assign dashboard_url = app_url | append: '?logged_in_customer_id=' | append: customer_id | append: '&shop=' | append: shop_domain | append: '&timestamp=' | append: timestamp | append: '&email=' | append: customer_email | append: '&name=' | append: customer_name -%}
       <a
-        href="{{ post_login_path }}"
+        href="{{ dashboard_url }}"
         class="button button--primary drawer-auth__btn"
         rel="nofollow"
-      >Dashboard</a>
+      >🧠 Red Pill AI</a>
 
       <a
         href="{{ routes.account_logout_url }}"
         class="button button--secondary drawer-auth__btn"
       >{{ 'customer.log_out' | t }}</a>
     {%- else -%}
+      {%- assign return_url = app_url | url_encode -%}
       <a
-        href="/customer_authentication/login?return_to={{ post_login_path | url_encode }}"
+        href="/account/login?return_url={{ return_url }}"
         class="button button--primary drawer-auth__btn"
         rel="nofollow"
       >Login</a>

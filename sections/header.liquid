@@ -437,16 +437,21 @@
 
 {%- if shop.customer_accounts_enabled -%}
   <div class="desktop-only">
-    {%- assign post_login_base = '/apps/screen-time-journey' -%}
-    {%- assign from_value = request.path | url_param_escape -%}
-    {%- assign post_login_path = post_login_base | append: '?source=header&from=' | append: from_value -%}
-
     {%- if customer -%}
+      {%- comment -%} Red Pill AI Dashboard with SSO {%- endcomment -%}
+      {%- assign app_url = 'https://app.redpillgpt.com/' -%}
+      {%- assign timestamp = 'now' | date: '%s' -%}
+      {%- assign customer_id = customer.id -%}
+      {%- assign shop_domain = shop.permanent_domain -%}
+      {%- assign customer_email = customer.email | url_encode -%}
+      {%- assign customer_name = customer.name | url_encode -%}
+      {%- assign dashboard_url = app_url | append: '?logged_in_customer_id=' | append: customer_id | append: '&shop=' | append: shop_domain | append: '&timestamp=' | append: timestamp | append: '&email=' | append: customer_email | append: '&name=' | append: customer_name -%}
+      
       <a
-        href="{{ post_login_path }}"
+        href="{{ dashboard_url }}"
         class="button button--primary header__cta"
         rel="nofollow"
-      >Dashboard</a>
+      >🧠 Red Pill AI</a>
 
       <a
         href="{{ routes.account_logout_url }}"
