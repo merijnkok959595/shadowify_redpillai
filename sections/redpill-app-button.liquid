@@ -1,0 +1,29 @@
+{% comment %}
+  Red Pill AI App Button Section
+  Add this section to your theme to display the Red Pill AI app link
+{% endcomment %}
+
+<div class="redpill-app-section" style="padding: 40px 20px; text-align: center; background: #f9f9f9;">
+  <div style="max-width: 600px; margin: 0 auto;">
+    <h2 style="font-family: 'DM Serif Display', serif; font-size: 32px; color: #2E0456; margin-bottom: 16px;">
+      Your Red Pill AI Dashboard
+    </h2>
+    <p style="font-size: 16px; color: #5b6472; margin-bottom: 24px;">
+      Analyze your WhatsApp conversations and get your Red Pill Score
+    </p>
+    {% render 'redpill-app-link' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Red Pill AI App Button",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Red Pill AI App Button"
+    }
+  ]
+}
+{% endschema %}
+

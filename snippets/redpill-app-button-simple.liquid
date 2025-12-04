@@ -1,0 +1,44 @@
+{% comment %}
+  Simple Red Pill AI App Button
+  Works on ANY Shopify plan (no Shopify Plus needed!)
+  
+  Usage: Add this anywhere in your theme:
+  {% render 'redpill-app-button-simple' %}
+{% endcomment %}
+
+{% if customer %}
+  <div class="redpill-ai-button-wrapper" style="margin: 24px 0; padding: 20px; background: linear-gradient(135deg, #2E0456 0%, #1a0230 100%); border-radius: 12px; text-align: center;">
+    <h3 style="color: white; font-size: 20px; margin-bottom: 8px; font-weight: 600;">
+      🧠 Ready to Analyze Your Conversations?
+    </h3>
+    <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 16px;">
+      Get your Red Pill Score and relationship insights
+    </p>
+    <a 
+      href="https://app.redpillgpt.com/?logged_in_customer_id={{ customer.id }}&shop={{ shop.permanent_domain }}&timestamp={{ 'now' | date: '%s' }}&email={{ customer.email | url_encode }}&name={{ customer.name | url_encode }}"
+      class="redpill-ai-cta-button"
+      style="display: inline-block; padding: 14px 32px; background: white; color: #2E0456; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; transition: transform 0.2s;"
+      onmouseover="this.style.transform='scale(1.05)'"
+      onmouseout="this.style.transform='scale(1)'"
+    >
+      Open Your Dashboard →
+    </a>
+  </div>
+{% else %}
+  <div class="redpill-ai-login-prompt" style="margin: 24px 0; padding: 20px; background: #f9f9f9; border-radius: 12px; text-align: center; border: 2px solid #2E0456;">
+    <h3 style="color: #2E0456; font-size: 18px; margin-bottom: 8px; font-weight: 600;">
+      🔒 Login Required
+    </h3>
+    <p style="color: #5b6472; font-size: 14px; margin-bottom: 16px;">
+      Please log in to access your Red Pill AI dashboard
+    </p>
+    <a 
+      href="/account/login?return_url={{ request.path | url_encode }}"
+      class="redpill-ai-login-button"
+      style="display: inline-block; padding: 12px 28px; background: #2E0456; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;"
+    >
+      Login to Continue
+    </a>
+  </div>
+{% endif %}
+

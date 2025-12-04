@@ -1,0 +1,35 @@
+{% comment %}
+  Red Pill AI App SSO Link
+  This snippet creates a link to the Red Pill AI app with Shopify SSO parameters
+  
+  Usage:
+  {% render 'redpill-app-link' %}
+{% endcomment %}
+
+{% if customer %}
+  {% comment %} Customer is logged in, generate SSO link {% endcomment %}
+  {% assign app_url = 'https://app.redpillgpt.com' %}
+  {% assign timestamp = 'now' | date: '%s' %}
+  {% assign customer_id = customer.id %}
+  
+  {% comment %} Create HMAC signature (simplified for frontend) {% endcomment %}
+  {% assign hmac_data = customer_id | append: timestamp %}
+  
+  <a 
+    href="{{ app_url }}/?logged_in_customer_id={{ customer_id }}&timestamp={{ timestamp }}&shop={{ shop.permanent_domain }}&hmac={{ hmac_data | hmac_sha256: shop.permanent_domain }}" 
+    class="redpill-app-link btn"
+    style="display: inline-block; padding: 12px 24px; background: #2E0456; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; text-align: center;"
+  >
+    🧠 Open Red Pill AI Dashboard
+  </a>
+{% else %}
+  {% comment %} Customer not logged in, show login prompt {% endcomment %}
+  <a 
+    href="/account/login?return_url={{ app_url | url_encode }}" 
+    class="redpill-app-login btn"
+    style="display: inline-block; padding: 12px 24px; background: #2E0456; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; text-align: center;"
+  >
+    Login to Access Red Pill AI
+  </a>
+{% endif %}
+
