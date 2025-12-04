@@ -107,7 +107,7 @@
     "inverse_light_and_dark_for_secondary_color": false,
     "custom_arrow_background_color": "#000000",
     "h2_font_size_mobile": 30,
-    "type_header_font": "dm_serif_display_n4",
+    "type_header_font": "montserrat_n8",
     "heading_scale": 125,
     "type_body_font": "inter_n4",
     "title_alignment": "text-left",
