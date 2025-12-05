@@ -1,0 +1,75 @@
+{% comment %}
+  🔐 Secure Shopify SSO via App Proxy
+  
+  This page uses the Shopify App Proxy for maximum security.
+  
+  Flow:
+  1. Customer clicks button → /pages/go-to-app
+  2. This page redirects to App Proxy: /apps/redpill-sso
+  3. Shopify proxies to AWS, which creates token and redirects to app
+  4. React app exchanges token for JWT and logs user in
+  
+  Created: {{ "now" | date: "%Y-%m-%d %H:%M:%S" }}
+  Updated: 2025-12-05 (App Proxy integration)
+{% endcomment %}
+
+{% if customer %}
+  {%- comment -%} Customer is logged in, redirect to App Proxy {%- endcomment -%}
+  
+  <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #2E0456 0%, #1a0230 100%);">
+    <div style="text-align: center; color: white; max-width: 500px; padding: 40px;">
+      <div style="font-size: 48px; margin-bottom: 20px;">🧠</div>
+      <h1 style="font-family: 'DM Serif Display', serif; font-size: 32px; margin-bottom: 16px;">
+        Welcome, {{ customer.first_name }}!
+      </h1>
+      <p style="font-size: 18px; opacity: 0.9; margin-bottom: 32px;">
+        Redirecting to your Red Pill AI Dashboard...
+      </p>
+      <div style="display: inline-block; padding: 12px 24px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; animation: pulse 2s infinite;">
+        <span style="font-size: 14px;">🔐 Authenticating via Shopify App Proxy...</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      console.log('🛍️ [Shopify SSO] Using App Proxy for secure authentication...');
+      
+      // Build App Proxy URL with customer data
+      const proxyUrl = '/apps/redpill-sso?' + new URLSearchParams({
+        logged_in_customer_id: "{{ customer.id }}",
+        shop: "{{ shop.permanent_domain }}",
+        customer_email: "{{ customer.email | escape }}",
+        customer_name: "{{ customer.name | escape }}",
+        timestamp: Date.now().toString()
+      });
+      
+      console.log('🚀 [Shopify SSO] Redirecting to App Proxy:', proxyUrl);
+      
+      // Redirect to App Proxy (Shopify handles the rest!)
+      window.location.href = proxyUrl;
+    })();
+  </script>
+
+  <style>
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
+
+{% else %}
+  {%- comment -%} Customer is NOT logged in, redirect to login {%- endcomment -%}
+  
+  <script>
+    console.log('❌ Not logged in, redirecting to login page...');
+    window.location.href = '/account/login?return_url=/pages/go-to-app';
+  </script>
+
+  <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #f9f9f9;">
+    <div style="text-align: center; padding: 40px;">
+      <p style="font-size: 18px; color: #666;">Redirecting to login...</p>
+    </div>
+  </div>
+  
+{% endif %}

@@ -1,36 +1,8 @@
-
-<script>
-  // Redirect logged-in users to Red Pill AI Dashboard with SSO
-  (function() {
-    // Get customer data from Shopify
-    {% if customer %}
-      const customerId = {{ customer.id }};
-      const customerEmail = "{{ customer.email | escape }}";
-      const customerName = "{{ customer.name | escape }}";
-      const shop = "{{ shop.permanent_domain }}";
-      const timestamp = Date.now();
-      
-      // Build SSO URL
-      const appUrl = `https://app.redpillgpt.com/?logged_in_customer_id=${customerId}&shop=${shop}&timestamp=${timestamp}&email=${encodeURIComponent(customerEmail)}&name=${encodeURIComponent(customerName)}`;
-      
-      // Redirect to app
-      window.location.replace(appUrl);
-    {% else %}
-      // Not logged in, redirect to login
-      window.location.replace("/account/login");
-    {% endif %}
-  })();
-</script>
-
-<div style="text-align: center; padding: 40px 20px;">
-  <div style="display: inline-block; padding: 12px 24px; background: #2E0456; color: white; border-radius: 8px; animation: pulse 2s infinite;">
-    <p style="margin: 0; font-size: 16px;">🧠 Redirecting to your Red Pill AI Dashboard...</p>
-  </div>
-</div>
-
-<style>
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
-</style>
+{% comment %}
+  🔐 Account Page - NO AUTO-REDIRECT
+  
+  Users should click the "🧠 Red Pill AI" button in the header,
+  which uses the secure App Proxy flow via /pages/go-to-app
+  
+  This page now shows normal Shopify account info (orders, addresses, etc.)
+{% endcomment %}

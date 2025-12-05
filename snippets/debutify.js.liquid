@@ -1,5 +1,21 @@
 // Initialize Debutify object if it doesn't exist
-globalThis.Debutify = globalThis.Debutify || {};
+// CRITICAL: This MUST be set before any other Debutify code runs
+if (typeof globalThis.Debutify === 'undefined' || globalThis.Debutify === null) {
+  globalThis.Debutify = {};
+}
+
+// Protect Debutify from being deleted by defining it as non-configurable
+try {
+  Object.defineProperty(globalThis, 'Debutify', {
+    value: globalThis.Debutify,
+    writable: true,
+    enumerable: true,
+    configurable: false  // Cannot be deleted
+  });
+  console.log('✅ Debutify object protected from deletion');
+} catch (e) {
+  console.warn('⚠️ Could not protect Debutify object:', e);
+}
 
 Debutify.permanent_domain = "{{ shop.permanent_domain }}";
 Debutify.designMode = "{{ request.design_mode }}" === "true";

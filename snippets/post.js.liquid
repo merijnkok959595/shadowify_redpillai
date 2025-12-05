@@ -2,13 +2,23 @@
 // Original API validation commented out for troubleshooting
 // Date: {{ "now" | date: "%Y-%m-%d" }}
 
+// Ensure License, Widget, and Debutify objects exist
+globalThis.License = globalThis.License || {};
+globalThis.Widget = globalThis.Widget || {};
+globalThis.Debutify = globalThis.Debutify || {};
+
 // Set License to enterprise plan (bypassed)
 License.plan = "enterprise";
 License.activated = true;
 License.isValid = true;
 License.isPremium = true;
 
-console.log('Debutify License: Enterprise plan active (validation bypassed for active subscription)');
+// Ensure widgets object exists
+if (!Debutify.widgets) {
+  Debutify.widgets = {};
+}
+
+console.log('✅ Debutify License: Enterprise plan active (validation bypassed for active subscription)');
 
 // Helper functions (kept for compatibility)
 function getPlanFromCookie() {

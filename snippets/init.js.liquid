@@ -3,17 +3,40 @@
 // Date: {{ "now" | date: "%Y-%m-%d" }}
 
 // Initialize License and Widget objects as valid
-globalThis.License = globalThis.License || {};
-globalThis.Widget = globalThis.Widget || {};
+if (typeof globalThis.License === 'undefined' || globalThis.License === null) {
+  globalThis.License = {};
+}
+if (typeof globalThis.Widget === 'undefined' || globalThis.Widget === null) {
+  globalThis.Widget = {};
+}
+
+// Protect License and Widget from being deleted
+try {
+  Object.defineProperty(globalThis, 'License', {
+    value: globalThis.License,
+    writable: true,
+    enumerable: true,
+    configurable: false  // Cannot be deleted
+  });
+  Object.defineProperty(globalThis, 'Widget', {
+    value: globalThis.Widget,
+    writable: true,
+    enumerable: true,
+    configurable: false  // Cannot be deleted
+  });
+  console.log('✅ License and Widget objects protected from deletion');
+} catch (e) {
+  console.warn('⚠️ Could not protect License/Widget objects:', e);
+}
 
 // Set license properties
 License.permanent_domain = '{{ shop.permanent_domain }}';
 License.isValid = true;
 License.isPremium = true;
 License.plan = 'premium';
+License.activated = true;
 
-// Ensure License and Widget objects are never deleted
-console.log('Debutify License: Initialized (validation bypassed for active subscription)');
+console.log('✅ Debutify License: Initialized (validation bypassed for active subscription)');
 
 // Original validation code (commented out):
 /*

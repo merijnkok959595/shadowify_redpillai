@@ -148,19 +148,12 @@
 
 {%- comment -%} AUTH BUTTONS FOR MOBILE DRAWER {%- endcomment -%}
 {%- if shop.customer_accounts_enabled -%}
-  {%- comment -%} Red Pill AI Dashboard with SSO {%- endcomment -%}
-  {%- assign app_url = 'https://app.redpillgpt.com/' -%}
-  {%- assign timestamp = 'now' | date: '%s' -%}
+  {%- comment -%} Red Pill AI Dashboard - Secure SSO via /pages/go-to-app {%- endcomment -%}
   
   <div class="drawer-auth">
     {%- if customer -%}
-      {%- assign customer_id = customer.id -%}
-      {%- assign shop_domain = shop.permanent_domain -%}
-      {%- assign customer_email = customer.email | url_encode -%}
-      {%- assign customer_name = customer.name | url_encode -%}
-      {%- assign dashboard_url = app_url | append: '?logged_in_customer_id=' | append: customer_id | append: '&shop=' | append: shop_domain | append: '&timestamp=' | append: timestamp | append: '&email=' | append: customer_email | append: '&name=' | append: customer_name -%}
       <a
-        href="{{ dashboard_url }}"
+        href="/pages/go-to-app"
         class="button button--primary drawer-auth__btn"
         rel="nofollow"
       >🧠 Red Pill AI</a>
@@ -170,9 +163,8 @@
         class="button button--secondary drawer-auth__btn"
       >{{ 'customer.log_out' | t }}</a>
     {%- else -%}
-      {%- assign return_url = app_url | url_encode -%}
       <a
-        href="/account/login?return_url={{ return_url }}"
+        href="/account/login?return_url=/pages/go-to-app"
         class="button button--primary drawer-auth__btn"
         rel="nofollow"
       >Login</a>
