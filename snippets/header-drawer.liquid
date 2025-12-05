@@ -148,12 +148,12 @@
 
 {%- comment -%} AUTH BUTTONS FOR MOBILE DRAWER {%- endcomment -%}
 {%- if shop.customer_accounts_enabled -%}
-  {%- comment -%} Red Pill AI Dashboard - Secure SSO via /pages/go-to-app {%- endcomment -%}
+  {%- comment -%} Red Pill AI Dashboard - Secure SSO via App Proxy {%- endcomment -%}
   
   <div class="drawer-auth">
     {%- if customer -%}
       <a
-        href="/pages/go-to-app"
+        href="/apps/redpill-sso"
         class="button button--primary drawer-auth__btn"
         rel="nofollow"
       >🧠 Red Pill AI</a>
@@ -164,7 +164,7 @@
       >{{ 'customer.log_out' | t }}</a>
     {%- else -%}
       <a
-        href="/account/login?return_url=/pages/go-to-app"
+        href="/account/login?return_url=/apps/redpill-sso"
         class="button button--primary drawer-auth__btn"
         rel="nofollow"
       >Login</a>
